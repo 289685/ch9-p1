@@ -1,1 +1,66 @@
+#include <iostream>
 
+using namespace std;
+
+void sortScores(double* arr, int size);
+double getAverageDropLowest(double* arr, int size);
+
+int main() {
+	int size;
+
+	cout << "Enter the number of test scores: ";
+	cin >> size;
+
+	while (size <= 1) {
+		cout << "You have to enter at least 2 scores to drop the lowest, Retry: ";
+		cin >> size;
+	}
+
+	double* scores = new double[size];
+
+	for (int i = 0; i < size; i++) {
+		cout << "Enter score " << (i + 1) << ": ";
+		cin >> *(scores + i);
+
+		while (*(scores + i) < 0) {
+			cout << "Negative scores not allowed, retry: ";
+			cin >> *(scores + i);
+		}
+	}
+
+	sortScores(scores, size);
+
+	double avg = getAverageDropLowest(scores, size);
+
+	cout << "\nSorted Scores:\n";
+	for (int i = 0; i < size; i++) {
+		cout << *(scores + i) << " ";
+	}
+
+	cout << "\n\nLowest score dropped: " << *(scores + 0) << endl;
+	cout << "Average Score: " << avg << endl;
+
+	return 0;
+}
+
+void sortScores(double* arr, int size) {
+	for (int i = 0; i < size - 1; i++) {
+		for (int j = i + 1; j < size; j++) {
+			if (*(arr + i) > *(arr + j)) {
+				double temp = *(arr + i);
+				*(arr + i) = *(arr + j);
+				*(arr + j) = temp;
+			}
+		}
+	}
+}
+
+double getAverageDropLowest(double* arr, int size) {
+	double total = 0;
+
+	for (int i = 1; i < size; i++) {
+		total += *(arr + i);
+	}
+
+	return total / (size - 1);
+}
