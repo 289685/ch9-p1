@@ -1,1 +1,58 @@
+#include <iostream>
 
+using namespace std;
+
+void sortScores(double* arr, int size);
+double getAverage(double* arr, int size);
+
+int main() {
+	int size;
+
+	cout << "Enter the number of test scores: ";
+	cin >> size;
+
+	double* scores = new double[size];
+
+	for (int i = 0; i < size; i++) {
+		cout << "Enter score " << (i + 1) << ": ";
+		cin >> *(scores + i);
+
+		while (*(scores + i) < 0) {
+			cout << "invalid score, Retry: ";
+			cin >> *(scores + i);
+		}
+	}
+
+	sortScores(scores, size);
+	double avg = getAverage(scores, size);
+
+	cout << "\nSorted Scores:\n";
+	for (int i = 0; i < size; i++) {
+		cout << *(scores + i) << " ";
+	}
+
+	cout << "\n\nAverage Score: " << avg << endl;
+
+
+	return 0;
+}
+
+void sortScores(double* arr, int size) {
+	for (int i = 0; i < size - 1; i++) {
+		for (int j = i + 1; j < size; j++) {
+			if (*(arr + i) > *(arr + j)) {
+				double temp = *(arr + i);
+				*(arr + i) = *(arr + j);
+				*(arr + j) = temp;
+			}
+		}
+	}
+}
+
+double getAverage(double* arr, int size) {
+	double total = 0;
+	for (int i = 0; i < size; i++) {
+		total += *(arr + i);
+	}
+	return total / size;
+}
