@@ -1,0 +1,27 @@
+#include <iostream>
+
+using namespace std;
+
+int* allocateArray(int size) {
+	if (size <= 0) {
+		cout << "invalid";
+		return nullptr;
+	}
+
+	int* arr = new int[size];
+
+	return arr;
+}
+
+int main() {
+	int numElements = 10;
+	int* my_array = allocateArray(numElements);
+
+	if (my_array != nullptr) {
+		cout << "Array of size " << numElements;
+
+		delete[] my_array;
+	}
+
+	return 0;
+}
